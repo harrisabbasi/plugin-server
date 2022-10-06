@@ -1,5 +1,6 @@
 <?php
 require_once('Medoo-master/src/Medoo.php');
+use Medoo\Medoo;
 
 $database = new Medoo([
 	// [required]
@@ -24,10 +25,10 @@ $database->create("tokens_list", [
 ]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+	session_start();
 	$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
-	if (!$token || $token !== $_SESSION['token']) {
+	if (!$token || $token != $_SESSION['token']) {
 	    // return 405 http status code
 	    header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
 	    exit;
@@ -58,7 +59,3 @@ else{
 </form>
 
 <?php } ?>
-
-
-
-?>

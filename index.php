@@ -2,7 +2,7 @@
 require_once('Medoo-master/src/Medoo.php');
 use Medoo\Medoo;
 
-if isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
+if (isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
 
   $database = new Medoo([
       // [required]
@@ -25,7 +25,10 @@ if isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
   }
 
 
-}?>
+} else {
+ echo 'Something went wrong. Please try again';
+ exit; 
+} ?>
 <head>
   <meta charset="utf-8">
   
@@ -45,6 +48,9 @@ if isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
     <input type="hidden" id="nonce" name="payment_method_nonce"/>
     <input type="hidden"  name="eco_bag_token" value="<?php echo $_GET['eco_bag_token'] ?>"/>
     <input type="hidden"  name="return_url" value="<?php echo $_GET['return_url'] ?>"/>
+    <?php if (isset($_GET['action']) && $_GET['action'] === 'update'){?>
+      <input type="hidden"  name="pick_pack_update" value="update"/>
+    <?php } ?>
   </form>
 
   <script

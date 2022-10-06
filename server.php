@@ -57,30 +57,84 @@ if (isset($_POST['payment_method_nonce'])){
 	  ]
 	]);*/
 
+	if (!isset($_POST['pick_pack_update'])){
 
-	$result = $gateway->customer()->create([
-	    'firstName' => $_POST['first_name'],
-	    'lastName' => $_POST['last_name'],
-	    'company' => $_POST['company'],
-	    'paymentMethodNonce' => $nonceFromTheClient
-	]);
-	if ($result->success) {
-	    echo($result->customer->id);
-	    echo($result->customer->paymentMethods[0]->token);
+		$result = $gateway->customer()->create([
+		    'firstName' => $_POST['first_name'],
+		    'lastName' => $_POST['last_name'],
+		    'company' => $_POST['company'],
+		    'paymentMethodNonce' => $nonceFromTheClient
+		]);
+		if ($result->success) {
+		    echo($result->customer->id);
+		    echo($result->customer->paymentMethods[0]->token);
 
-	    $database->insert("tokens_db", [
-	    	"eco_bag_token" => $eco_bag_token,
-	    	"payment_token" => $result->customer->paymentMethods[0]->token,
-	    ]);
+		    $database->insert("tokens_db", [
+		    	"eco_bag_token" => $eco_bag_token,
+		    	"payment_token" => $result->customer->id,
+		    ]);
 
-	    header('Location: '. $return_url . '?status=success&token=' . $eco_bag_token);
+		    header('Location: '. $return_url . '?status=success&token=' . $eco_bag_token);
 
-	} else {
-	    foreach($result->errors->deepAll() AS $error) {
-	        echo($error->code . ": " . $error->message . "\n");
-	    }
+		} else {
+		    foreach($result->errors->deepAll() AS $error) {
+		        echo($error->code . ": " . $error->message . "\n");
+		    }
 
-	    header('Location: '. $return_url . '?status=failure');
+		    header('Location: '. $return_url . '?status=failure');
+		}
+	}
+	else{
+		$data = $database->select("tokens_db", [
+		    "payment_token"
+		  ], [
+		    "eco_bag_token" => $_POST['eco_bag_token']
+		  ]);
+
+		if ($database->error || count($data) !== 1){
+		  echo 'There was some error retrieving the token';
+		  exit;
+		}
+
+		$customer = $gateway->customer()->find($data[0]['payment_token']);
+		$token_2 = $customer->creditCards[0]->token;
+
+		$result = $gateway->customer()->update(
+		$data[0]['payment_token'],
+  		[
+  		  'paymentMethodNonce' => $nonceFromTheClient,
+	      'firstName' => $_POST['first_name'],
+	      'lastName' => $_POST['last_name'],
+	      'company' => $_POST['company'],
+	      'creditCard' => [
+	             'options' => [
+	                 'updateExistingToken' => $token_2
+	             ]
+	          ]
+        ]
+		);
+
+		if ($result->success) {
+		   /* echo($result->customer->id);
+		    echo($result->customer->paymentMethods[0]->token);
+
+		    $database->insert("tokens_db", [
+		    	"eco_bag_token" => $eco_bag_token,
+		    	"payment_token" => $result->customer->paymentMethods[0]->token,
+		    ]);*/
+
+		    header('Location: '. $return_url . '?status=success&token=' . $eco_bag_token);
+
+		} else {
+		    foreach($result->errors->deepAll() AS $error) {
+		        echo($error->code . ": " . $error->message . "\n");
+		    }
+
+		    header('Location: '. $return_url . '?status=failure');
+		}
+
+
+
 	}
 
 	var_dump($result);

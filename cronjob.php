@@ -36,7 +36,7 @@ $gateway = new Braintree\Gateway([
 
 $result = $gateway->transaction()->sale([
   'amount' => '3.00' * $_GET['eco_bags_sold'],
-  'paymentMethodToken' => $data[0]['payment_token'],
+  'customerId' => $data[0]['payment_token'],
   'options' => [
     'submitForSettlement' => True
   ]
