@@ -1,16 +1,23 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once('braintree-php-6.9.0/lib/autoload.php');
+require_once('braintree-php-6.9.0/lib/Braintree/Gateway.php');
 require_once('Medoo-master/src/Medoo.php');
 use Medoo\Medoo;
+Use Braintree;
+
 
 $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'eco_bag',
-	'username' => 'root',
-	'password' => '',
+	'database' => 'yqvbgnftww',
+	'username' => 'yqvbgnftww',
+	'password' => 'b9wXQZ44yG',
 ]);
 
 $database->create("tokens_db", [

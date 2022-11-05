@@ -5,13 +5,13 @@ use Medoo\Medoo;
 if (isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
 
   $database = new Medoo([
-      // [required]
-      'type' => 'mysql',
-      'host' => 'localhost',
-      'database' => 'eco_bag',
-      'username' => 'root',
-      'password' => '',
-    ]);
+    // [required]
+    'type' => 'mysql',
+    'host' => 'localhost',
+    'database' => 'yqvbgnftww',
+    'username' => 'yqvbgnftww',
+    'password' => 'b9wXQZ44yG',
+  ]);
 
   $data = $database->select("tokens_list", [
       "eco_bag_token"
@@ -31,7 +31,34 @@ if (isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
 } ?>
 <head>
   <meta charset="utf-8">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    body{
+      padding:20px;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .input {
+      font-size: 16px;
+      font-size: max(16px, 1em);
+      font-family: inherit;
+      padding: 0.25em 0.5em;
+      background-color: #fff;
+      border: 2px solid var(--input-border);
+      border-radius: 4px;
+    }
+
+    input[type=submit] {
+        padding:5px 15px; 
+        background:#ccc; 
+        border:0 none;
+        cursor:pointer;
+        -webkit-border-radius: 5px;
+        border-radius: 5px; 
+    }
+  </style>
 </head>
 <body>
   <!-- Step one: add an empty container to your page -->
@@ -40,9 +67,10 @@ if (isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
         `braintree.dropin.create` inside a form will make layout and flow
         easier to manage -->
     <div id="dropin-container"></div>
-    <input type="" name="first_name" placeholder="First Name" required>
-    <input type="" name="last_name" placeholder="Last Name" required>
-    <input type="" name="company" placeholder="Company" required>
+    <h2>Enter your credentials:</h2>
+    <input class="input" type="" name="first_name" placeholder="First Name" required>
+    <input class="input" type="" name="last_name" placeholder="Last Name" required>
+    <input class="input" type="" name="company" placeholder="Company" required>
     <input type="submit" />
 
     <input type="hidden" id="nonce" name="payment_method_nonce"/>

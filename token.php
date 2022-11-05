@@ -2,13 +2,17 @@
 require_once('Medoo-master/src/Medoo.php');
 use Medoo\Medoo;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'eco_bag',
-	'username' => 'root',
-	'password' => '',
+	'database' => 'yqvbgnftww',
+	'username' => 'yqvbgnftww',
+	'password' => 'b9wXQZ44yG',
 ]);
 
 $database->create("tokens_list", [
@@ -48,14 +52,54 @@ else{
 }
 
 ?>
-<?php if (isset($eco_bag_token)){ ?>
-	<h1>Here is your pick pack token. Add it in the pick pack dashboard and add or update your payement method</h1>
-	<h2><?php echo $eco_bag_token ?></h2>
-<?php } else { ?>
 
-<form method="POST">
-	<input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
-	<input type="submit" value="Generate Token">
-</form>
+<head>
+	<meta charset="utf-8">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap" rel="stylesheet">
+	<style>
+	  body{
+	    padding:20px;
+	    font-family: 'Open Sans', sans-serif;
+	  }
+
+	  .input {
+	    font-size: 16px;
+	    font-size: max(16px, 1em);
+	    font-family: inherit;
+	    padding: 0.25em 0.5em;
+	    background-color: #fff;
+	    border: 2px solid var(--input-border);
+	    border-radius: 4px;
+	  }
+
+	  input[type=submit] {
+	      padding:5px 15px; 
+	      background:#ccc; 
+	      border:0 none;
+	      cursor:pointer;
+	      -webkit-border-radius: 5px;
+	      border-radius: 5px; 
+	  }
+	</style>
+	
+</head>
+
+<body>
+
+	<h3 style="text-align: center;">Pick Pack App</h3>
+	
+	<?php if (isset($eco_bag_token)){ ?>
+		<h1>Here is your pick pack token. Add it in the pick pack dashboard and add or update your payement method</h1>
+		<h2><?php echo $eco_bag_token ?></h2>
+	<?php } else { ?>
+
+	<form method="POST">
+		<input class="input" type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
+		<input type="submit" value="Generate Token">
+	</form>
+
+</body>
 
 <?php } ?>

@@ -12,9 +12,9 @@ $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'eco_bag',
-	'username' => 'root',
-	'password' => '',
+	'database' => 'yqvbgnftww',
+	'username' => 'yqvbgnftww',
+	'password' => 'b9wXQZ44yG',
 ]);
 
 $data = $database->select("tokens_db", [
