@@ -8,16 +8,16 @@ require_once('braintree-php-6.9.0/lib/autoload.php');
 require_once('braintree-php-6.9.0/lib/Braintree/Gateway.php');
 require_once('Medoo-master/src/Medoo.php');
 use Medoo\Medoo;
-Use Braintree;
+/*use Braintree;*/
 
 
 $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'yqvbgnftww',
-	'username' => 'yqvbgnftww',
-	'password' => 'b9wXQZ44yG',
+	'database' => 'eco_bag',
+	'username' => 'root',
+	'password' => '',
 ]);
 
 $database->create("tokens_db", [

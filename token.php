@@ -10,9 +10,9 @@ $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'yqvbgnftww',
-	'username' => 'yqvbgnftww',
-	'password' => 'b9wXQZ44yG',
+	'database' => 'eco_bag',
+	'username' => 'root',
+	'password' => '',
 ]);
 
 $database->create("tokens_list", [
@@ -25,12 +25,26 @@ $database->create("tokens_list", [
 	"eco_bag_token" => [
 		"VARCHAR(32)",
 		"NOT NULL"
+	],
+	"url" => [
+		"VARCHAR(32)",
+		"NOT NULL"
+	],
+	"company" => [
+		"VARCHAR(32)",
+		"NOT NULL"
+	],
+	"price" => [
+		"INT",
+		"NOT NULL"
 	]
 ]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	session_start();
 	$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+	$url = trim(filter_input(INPUT_POST, 'url', FILTER_SANITIZE_STRING));
+	$company = trim(filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING));
 
 	if (!$token || $token != $_SESSION['token']) {
 	    // return 405 http status code
@@ -41,6 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		$database->insert("tokens_list", [
 			"eco_bag_token" => $eco_bag_token,
+			"url" => $url,
+			"company" => $company,
+			"price"   => 3
 		]);
 
 	}
@@ -72,6 +89,7 @@ else{
 	    background-color: #fff;
 	    border: 2px solid var(--input-border);
 	    border-radius: 4px;
+	    margin-bottom: 10px;
 	  }
 
 	  input[type=submit] {
@@ -97,6 +115,10 @@ else{
 
 	<form method="POST">
 		<input class="input" type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
+		<p>Enter the URL of your root wordpress installation:</p>
+		<input type="url" class="input" type="" name="url" placeholder="Domain" required><br>
+		<p>Company Name:</p>
+		<input class="input" type="" name="company" placeholder="Company" required><br>
 		<input type="submit" value="Generate Token">
 	</form>
 

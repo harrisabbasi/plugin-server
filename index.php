@@ -8,9 +8,9 @@ if (isset($_GET['eco_bag_token']) & isset($_GET['return_url'])){
     // [required]
     'type' => 'mysql',
     'host' => 'localhost',
-    'database' => 'yqvbgnftww',
-    'username' => 'yqvbgnftww',
-    'password' => 'b9wXQZ44yG',
+    'database' => 'eco_bag',
+    'username' => 'root',
+    'password' => '',
   ]);
 
   $data = $database->select("tokens_list", [
