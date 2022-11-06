@@ -43,14 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			    $data[0]['url'] = substr($data[0]['url'], 0, -1);
 			}
 
-			/*$response = file_get_contents($data[0]['url'] . '/?request=curl');*/
+			//$referer = $_SERVER['HTTP_HOST'];
+			$referer = 'http://localhost/plugin_server/dashboard/update.php';
+						/*$response = file_get_contents($data[0]['url'] . '/?request=curl');*/
 			/*var_dump($data[0]['url']);*/
 			//Use curl on production server
 			$ch = curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, $data[0]['url'] . '/?request=curl');
+			curl_setopt($ch, CURLOPT_URL, $data[0]['url'] . '/?request=curl&price=' . $price);
 
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,2);
+
+			curl_setopt($ch, CURLOPT_REFERER, $referer);
 
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
@@ -68,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 			curl_close($ch);
 
-			/*var_dump($response);*/
+			var_dump($response);
 
 			if ($response == 'success'){
 				$database->update("tokens_list",
