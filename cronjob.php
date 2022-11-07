@@ -12,9 +12,9 @@ $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'yqvbgnftww',
-	'username' => 'yqvbgnftww',
-	'password' => 'b9wXQZ44yG',
+	'database' => 'eco_bag',
+	'username' => 'root',
+	'password' => '',
 ]);
 
 $data = $database->select("tokens_db", [
@@ -35,7 +35,7 @@ $gateway = new Braintree\Gateway([
 /*$paymentMethod = $gateway->paymentMethod()->find('k8yf1zqf');*/
 
 $result = $gateway->transaction()->sale([
-  'amount' => '3.00' * $_GET['eco_bags_sold'],
+  'amount' => $_GET['eco_bags_sold'],
   'customerId' => $data[0]['payment_token'],
   'options' => [
     'submitForSettlement' => True
