@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				}
 
 				if (!isset($_SESSION['message'])){
-					$_SESSION['message'] = 'The price for company' . $data['company'] . 'has been updated';
+					$_SESSION['message'] = 'The price for company ' . $data[0]['company'] . ' has been updated';
 				}
 
 				header('location:index.php');

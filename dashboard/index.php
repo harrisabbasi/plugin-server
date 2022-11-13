@@ -96,10 +96,6 @@ if (isset($_SESSION['message'])){
 
 					</form>
 				</div>
-				<div class="flex-item">
-					<p>Company Name:</p>
-					<p>Yassar Traders</p>
-				</div>
 				
 			<?php endforeach; ?>
 		</div>
