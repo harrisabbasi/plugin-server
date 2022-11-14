@@ -190,7 +190,7 @@ if (isset($_GET['company_id'])){
 					<div class="box">
 					  <select name="company_id">
 					  	<?php foreach ($companies as $company):?>
-					    	<option value="<?php echo $company['id'] ?>"><?php echo $company['company'] ?> </option>
+					    	<option <?php echo (isset($company_id) && $company_id == $company['id']) ? 'selected' : ''; ?> value="<?php echo $company['id'] ?>"><?php echo $company['company'] ?> </option>
 					    <?php endforeach; ?>
 					  </select>
 					</div>
