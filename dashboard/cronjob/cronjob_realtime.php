@@ -74,14 +74,21 @@ if ($script_not_running){
 
 		var_dump($company['url']);
 
-		curl_setopt($ch, CURLOPT_URL, $company['url'] . '/?request=curl&type=orders');
+		if(substr($company['url'], -1) == '/') {
+		    $company['url'] = substr($company['url'], 0, -1);
+		}
+		else{
+			$company['url'] = $company['url'] . '/';
+		}
+
+		curl_setopt($ch, CURLOPT_URL, $company['url'] . '?request=curl&type=orders');
 
 		$response = curl_exec($ch);
 
 		if (curl_errno($ch)) {
 		    var_dump(curl_error($ch));
 		}
-		
+
 		$order_array = array();
 
 		if ($response !== 'No orders' && strlen($response) < 500){
