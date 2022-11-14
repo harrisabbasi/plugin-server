@@ -44,11 +44,15 @@ if ($script_not_running){
 		"company_id" => [
 			"INT",
 			"NOT NULL"
+		],
+		"order_id" => [
+			"INT",
+			"NOT NULL"
 		]
 	]);
 
 	$data = $database->select("tokens_list", [
-		"url"
+		"url", "id"
 	]);
 
 	$ch = set_up_curl();
@@ -68,6 +72,41 @@ if ($script_not_running){
 			foreach ($orders as $order) {
 				$order_array[] = explode(' ', $order);
 			}
+
+			$previous_orders = $database->select("wordpress_orders", [
+			    "order_id"
+			  ], [
+			    "company_id" => $company['id']
+			  ]);
+			/*$previous_orders = [['order_id' => 266]];*/
+
+			if (count($previous_orders) !== 0){
+
+				$array_order_ids = array();
+				foreach ($previous_orders as $order) {
+					$array_order_ids[] = $order['order_id'];
+					
+				}
+
+
+				$order_array = array_filter($order_array, function ($order) use ($array_order_ids) {
+					return !in_array((int)$order[0], $array_order_ids);
+				});
+			}
+
+			foreach ($order_array as $order) {
+
+				$database->insert("wordpress_orders", [
+					"order_id" => $order[0],
+					"timestamp" => $order[1] . ' ' . $order[2],
+					"price"	=> $order[3],
+					"bags_sold" => $order[4],
+					"company_id" => $company['id']
+
+				]);
+				# code...
+			}
+			
 		}
 
 		var_dump($order_array);
