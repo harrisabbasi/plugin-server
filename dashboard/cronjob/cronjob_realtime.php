@@ -51,6 +51,19 @@ if ($script_not_running){
 		]
 	]);
 
+	$database->create("time_updated", [
+		"id" => [
+			"INT",
+			"NOT NULL",
+			"AUTO_INCREMENT",
+			"PRIMARY KEY"
+		],
+		"time" => [
+			"VARCHAR(100)",
+			"NOT NULL"
+		],
+	]);
+
 	$data = $database->select("tokens_list", [
 		"url", "id"
 	]);
@@ -64,9 +77,14 @@ if ($script_not_running){
 		curl_setopt($ch, CURLOPT_URL, $company['url'] . '/?request=curl&type=orders');
 
 		$response = curl_exec($ch);
+
+		if (curl_errno($ch)) {
+		    var_dump(curl_error($ch));
+		}
+		
 		$order_array = array();
 
-		if ($response !== 'No orders'){
+		if ($response !== 'No orders' && strlen($response) < 500){
 			$orders = explode('!', $response);
 
 			foreach ($orders as $order) {
@@ -111,9 +129,7 @@ if ($script_not_running){
 
 		var_dump($order_array);
 
-		if (curl_errno($ch)) {
-		    var_dump(curl_error($ch));
-		}
+		
 		
 	}
 
@@ -121,8 +137,23 @@ if ($script_not_running){
 
 	var_dump($response);
 
-	
+	$row = $database->select("time_updated", 
+		"*"
+	);
 
+	if (empty($row)){
+		$database->insert("time_updated", [
+			'time' => date('d-m-y h:i:s')
+		]);
+	}
+	else{
+		$database->update("time_updated", [
+			'time' => date('d-m-y h:i:s')
+		]);
+	}
+
+
+	
 
 	unlink('myscript.lock');
 }

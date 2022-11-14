@@ -33,11 +33,32 @@ if (isset($_SESSION['message'])){
 	<html>
 	<head>
 		<title>Eco Bag Dashboard</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 		<style>
 		  body{
 		    padding:20px;
 		    font-family: 'Open Sans', sans-serif;
 		  }
+
+		  a {
+		    background-color: red;
+		    color: white;
+		    padding: 1em 1.5em;
+		    text-decoration: none;
+		    text-transform: uppercase;
+		    border-radius: 10px;
+		  }
+
+		  .header{
+		  	margin-bottom: 30px;
+		  }
+
+		  .header p{
+		  	margin-left:30px;
+		  }
+
 
 		  .flex-container{
 		  	display: flex;
@@ -48,11 +69,16 @@ if (isset($_SESSION['message'])){
 		  	margin-left:30px;
 		  	border: 1px solid #ccc;
 		  	padding:20px;
+		  	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		  	border-radius: 10px;
 
 		  }
 
 		  .message{
 		  	border: 1px solid #ccc;
+		  	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		  	border-radius: 10px;
+		  	margin-left: 30px;
 		  	padding: 20px;
 		  }
 
@@ -78,7 +104,11 @@ if (isset($_SESSION['message'])){
 		</style>
 	</head>
 	<body>
-		<h2>Dashboard</h2>
+		<div class="flex-container header" >
+			<p><a href="index.php">Dashboard</a></p>
+			<p><a href="orders.php">Companies Orders</a></p>
+		</div>
+		
 		<?php if (isset($message)):?>
 			<p class="message"><?php echo $message ?></p>
 		<?php endif ?>
