@@ -45,12 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 			//$referer = $_SERVER['HTTP_HOST'];
 			$referer = 'http://localhost/plugin_server/dashboard/update.php';
+			$token = (string) rand();
 						/*$response = file_get_contents($data[0]['url'] . '/?request=curl');*/
 			/*var_dump($data[0]['url']);*/
 			//Use curl on production server
 			$ch = curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, $data[0]['url'] . '/?request=curl&price=' . $price);
+			curl_setopt($ch, CURLOPT_URL, $data[0]['url'] . '/?request=curl&price=' . $price . '&token=' . $token);
 
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,2);
 

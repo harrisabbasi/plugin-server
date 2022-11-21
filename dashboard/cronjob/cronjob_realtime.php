@@ -81,7 +81,9 @@ if ($script_not_running){
 			$company['url'] = $company['url'] . '/';
 		}
 
-		curl_setopt($ch, CURLOPT_URL, $company['url'] . '?request=curl&type=orders');
+		$token = (string) rand();
+
+		curl_setopt($ch, CURLOPT_URL, $company['url'] . '?request=curl&type=orders' . '&token=' . $token);
 
 		$response = curl_exec($ch);
 
