@@ -19,7 +19,7 @@ $data = $database->select("tokens_list",
 	array('id', 'eco_bag_token', 'url', 'company', 'price'));
 
 if ($database->error || count($data) == 0){
-  echo 'There was some error retrieving the token';
+  echo 'No company is registered';
   exit;
 }
 

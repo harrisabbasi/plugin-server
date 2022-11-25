@@ -22,48 +22,24 @@ if ($script_not_running){
 		'password' => '',
 	]);
 
-	$database->create("wordpress_orders", [
+	$database->create("website_status", [
 		"id" => [
 			"INT",
 			"NOT NULL",
 			"AUTO_INCREMENT",
 			"PRIMARY KEY"
 		],
-		"price" => [
+		"status" => [
 			"INT",
-			"NOT NULL"
-		],
-		"bags_sold" => [
-			"INT",
-			"NOT NULL"
-		],
-		"timestamp" => [
-			"VARCHAR(100)",
 			"NOT NULL"
 		],
 		"company_id" => [
 			"INT",
 			"NOT NULL"
 		],
-		"order_id" => [
-			"INT",
-			"NOT NULL"
-		]
 	]);
 
-	$database->create("time_updated", [
-		"id" => [
-			"INT",
-			"NOT NULL",
-			"AUTO_INCREMENT",
-			"PRIMARY KEY"
-		],
-		"time" => [
-			"VARCHAR(100)",
-			"NOT NULL"
-		],
-	]);
-
+	
 	$data = $database->select("tokens_list", [
 		"url", "id"
 	]);
@@ -89,78 +65,41 @@ if ($script_not_running){
 		    var_dump(curl_error($ch));
 		}
 
-		$order_array = array();
+		if ($response == "OK"){
 
-		if ($response !== 'No orders' && strlen($response) < 500){
-			$orders = explode('!', $response);
+			$status = 1;
 
-			foreach ($orders as $order) {
-				$order_array[] = explode(' ', $order);
-			}
-
-			$previous_orders = $database->select("wordpress_orders", [
-			    "order_id"
-			  ], [
-			    "company_id" => $company['id']
-			  ]);
-			/*$previous_orders = [['order_id' => 266]];*/
-
-			if (count($previous_orders) !== 0){
-
-				$array_order_ids = array();
-				foreach ($previous_orders as $order) {
-					$array_order_ids[] = $order['order_id'];
-					
-				}
-
-
-				$order_array = array_filter($order_array, function ($order) use ($array_order_ids) {
-					return !in_array((int)$order[0], $array_order_ids);
-				});
-			}
-
-			foreach ($order_array as $order) {
-
-				$database->insert("wordpress_orders", [
-					"order_id" => $order[0],
-					"timestamp" => $order[1] . ' ' . $order[2],
-					"price"	=> $order[3],
-					"bags_sold" => $order[4],
-					"company_id" => $company['id']
-
-				]);
-				# code...
-			}
-			
+		}
+		else{
+			$status = 0;
 		}
 
-		var_dump($order_array);
+		$row = $database->select("website_status", 
+			"*",
+			['company_id' => $company['id']]
+		);
 
-		
+		if (empty($row)){
+			$database->insert("website_status", [
+				'company_id' => $company['id'],
+				'status' => $status,
+			]);
+		}
+		else{
+			$database->update("website_status", [
+				'status' => $status
+			],[
+				'company_id' => $company['id']
+			]);
+		}
+
+
 		
 	}
 
 	curl_close($ch);
 
 	var_dump($response);
-
-	$row = $database->select("time_updated", 
-		"*"
-	);
-
-	if (empty($row)){
-		$database->insert("time_updated", [
-			'time' => date('d-m-y h:i:s')
-		]);
-	}
-	else{
-		$database->update("time_updated", [
-			'time' => date('d-m-y h:i:s')
-		]);
-	}
-
-
-	
 
 	unlink('myscript.lock');
 }

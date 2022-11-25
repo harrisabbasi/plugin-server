@@ -10,3 +10,4 @@ Stack trace:
 #3 {main}
   thrown in C:\wamp64\www\plugin_server\Medoo-master\src\Medoo.php on line 565
 [25-Nov-2022 12:40:00 UTC] Hello, errors!
+[25-Nov-2022 15:13:57 UTC] Hello, errors!

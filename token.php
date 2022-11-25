@@ -41,24 +41,53 @@ $database->create("tokens_list", [
 ]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
 	session_start();
+
 	$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 	$url = trim(filter_input(INPUT_POST, 'url', FILTER_SANITIZE_STRING));
 	$company = trim(filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING));
+
+	$company_exists = false;
+
+	if(substr($url, -1) == '/') {
+    	$url = substr($url, 0, -1);
+	}
+
+
+	$data_2 = $database->select("tokens_list", [
+		"url", "id"
+	],[
+		"url[~]" => $url
+	]);
+
+	if ($database->error || !empty($data_2)){
+	  $company_exists = true;
+	}
+
 
 	if (!$token || $token != $_SESSION['token']) {
 	    // return 405 http status code
 	    header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
 	    exit;
 	} else {
-		$eco_bag_token = bin2hex(random_bytes(16));
 
-		$database->insert("tokens_list", [
-			"eco_bag_token" => $eco_bag_token,
-			"url" => $url,
-			"company" => $company,
-			"price"   => 3
-		]);
+		if ($company_exists){
+			$company_exists_error = 'The company already exists';
+		}
+
+		else{
+			$eco_bag_token = bin2hex(random_bytes(16));
+
+			$database->insert("tokens_list", [
+				"eco_bag_token" => $eco_bag_token,
+				"url" => $url,
+				"company" => $company,
+				"price"   => 3
+			]);
+
+		}
+		
 
 	}
     // …
@@ -108,6 +137,10 @@ else{
 
 	<h3 style="text-align: center;">Pick Pack App</h3>
 	
+	<?php if (isset($company_exists_error)){ ?>
+		<p><?php echo $company_exists_error ?></p>
+	<?php }?>
+
 	<?php if (isset($eco_bag_token)){ ?>
 		<h1>Here is your pick pack token. Add it in the pick pack dashboard and add or update your payement method</h1>
 		<h2><?php echo $eco_bag_token ?></h2>
