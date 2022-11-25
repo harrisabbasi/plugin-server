@@ -73,13 +73,11 @@ if ($script_not_running){
 	foreach ($data as $company) {
 
 		var_dump($company['url']);
-
-		if(substr($company['url'], -1) == '/') {
-		    $company['url'] = substr($company['url'], 0, -1);
+		
+		if(substr($company['url'], -1) != '/') {
+		    $company['url'] = $company['url'] . '/';
 		}
-		else{
-			$company['url'] = $company['url'] . '/';
-		}
+		
 
 		$token = (string) rand();
 

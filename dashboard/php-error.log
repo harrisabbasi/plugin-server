@@ -1,0 +1,12 @@
+[25-Nov-2022 12:37:46 UTC] Hello, errors!
+[25-Nov-2022 12:37:46 UTC] PHP Warning:  Undefined array key "eco_bags_sold" in C:\wamp64\www\plugin_server\dashboard\order_webhook.php on line 98
+[25-Nov-2022 12:37:46 UTC] PHP Stack trace:
+[25-Nov-2022 12:37:46 UTC] PHP   1. {main}() C:\wamp64\www\plugin_server\dashboard\order_webhook.php:0
+[25-Nov-2022 12:37:46 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'bags_sold' cannot be null in C:\wamp64\www\plugin_server\Medoo-master\src\Medoo.php:565
+Stack trace:
+#0 C:\wamp64\www\plugin_server\Medoo-master\src\Medoo.php(565): PDOStatement->execute()
+#1 C:\wamp64\www\plugin_server\Medoo-master\src\Medoo.php(1753): Medoo\Medoo->exec(Object(PDOStatement), Array)
+#2 C:\wamp64\www\plugin_server\dashboard\order_webhook.php(99): Medoo\Medoo->insert('wordpress_order...', Array)
+#3 {main}
+  thrown in C:\wamp64\www\plugin_server\Medoo-master\src\Medoo.php on line 565
+[25-Nov-2022 12:40:00 UTC] Hello, errors!
