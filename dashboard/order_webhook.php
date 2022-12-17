@@ -2,7 +2,7 @@
 
 ini_set("log_errors", 1);
 ini_set("error_log", "C:/wamp64/www/plugin_server/dashboard/php-error.log");
-error_log( "Hello, errors!" );
+
 
 if (!isset($_GET['eco_bag_token'])){
    exit;
@@ -15,7 +15,7 @@ $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'eco_bag',
+	'database' => 'eco_bag_stripe',
 	'username' => 'root',
 	'password' => '',
 ]);

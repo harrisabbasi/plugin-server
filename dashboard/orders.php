@@ -7,7 +7,7 @@ $database = new Medoo([
 	// [required]
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'eco_bag',
+	'database' => 'eco_bag_stripe',
 	'username' => 'root',
 	'password' => '',
 ]);
