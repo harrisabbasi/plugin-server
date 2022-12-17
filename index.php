@@ -141,7 +141,7 @@ $client_secret = $intent->client_secret;
       //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
-        return_url: 'http://localhost/plugin_server/return_url.php?eco_bag_token=' + '<?php echo $_GET['eco_bag_token'] ?>' + '&customer=' + '<?php echo $customer->id ?>' + '&intent=' + '<?php echo $intent->id?>',
+        return_url: 'http://localhost/plugin_server/return_url.php?eco_bag_token=' + '<?php echo $_GET['eco_bag_token'] ?>' + '&customer=' + '<?php echo $customer->id ?>' + '&intent=' + '<?php echo $intent->id?>' + '&return_url=' + '<?php echo $_GET['return_url'] ?>',
       }
     });
 

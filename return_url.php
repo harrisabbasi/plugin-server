@@ -70,7 +70,14 @@ if ($intent->status == 'succeeded'){
 			"payment_token" => $_GET['customer'],
 		]);
 	}
+
+	header("Location: " . $_GET['return_url'] . '?token=' . $_GET['eco_bag_token'] . '&status=success');
+	die();
 	//make it default source using the customer object, you can retreive the default source (payment method id) using the intent object
+}
+else{
+	header("Location: " . $_GET['return_url'] . '?token=' . $_GET['eco_bag_token'] . '&status=failure');
+	die();
 }
 
 
