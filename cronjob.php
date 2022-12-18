@@ -36,7 +36,7 @@ $payment_method = $stripe->customers->allPaymentMethods(
 
 try {
   $stripe->paymentIntents->create([
-    'amount' => $_GET['eco_bags_sold'] * 100,
+    'amount' => number_format((float)$_GET['eco_bags_sold'], 2, '.', '') * 100,
     'currency' => 'cad',
     'customer' => $data[0]['payment_token'],
     'payment_method' => $payment_method->data[0]->id,

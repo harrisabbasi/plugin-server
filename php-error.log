@@ -1,1 +1,15 @@
 [17-Dec-2022 13:37:26 UTC] Hello, errors!
+[18-Dec-2022 13:34:10 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_mw4GmwNY24lq54) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38
+[18-Dec-2022 13:36:11 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_TXlOBmVSmOhUao) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38
+[18-Dec-2022 13:38:14 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_EeVwXoimVJdApP) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38
+[18-Dec-2022 13:40:15 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_wcpZPbxAcmQwUb) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38
+[18-Dec-2022 13:42:16 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_n5W3kGbLTfgYQy) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38
+[18-Dec-2022 13:44:17 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_CorPTOqJFj71tO) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38
+[18-Dec-2022 13:46:18 UTC] PHP Fatal error:  Uncaught (Status 400) (Request req_OWL3LHFOax6QrQ) Invalid integer: 458.75025
+  thrown in C:\wamp64\www\plugin_server\vendor\stripe\stripe-php\lib\Exception\ApiErrorException.php on line 38

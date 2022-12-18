@@ -121,7 +121,7 @@ if (isset($_SESSION['message'])){
 						<p>Company Name:</p>
 						<p><?php echo $company['company'] ?></p>
 						<p>Price:</p>
-						<input type="number" class="input"  value="<?php echo (isset($company['price'])) ? $company['price'] : 3 ?>"name="price" placeholder="Price" required><br>
+						<input step=".01" type="number" class="input"  value="<?php echo (isset($company['price'])) ? $company['price'] : 3 ?>"name="price" placeholder="Price" required><br>
 						<input type="submit" value="Update Price">
 
 					</form>
