@@ -3,6 +3,9 @@ require_once('Medoo-master/src/Medoo.php');
 require 'vendor/autoload.php';
 use Medoo\Medoo;
 
+ini_set("log_errors", 1);
+ini_set("error_log", "php-error.log");
+
 if (isset($_GET['eco_bag_token']) & isset($_GET['customer'])){
 
   $database = new Medoo([
@@ -52,8 +55,16 @@ $database->create("tokens_db", [
 $stripe = new \Stripe\StripeClient(
   'sk_test_51MFcSvBsDABuUoiXtoHX3oYHzXjyj9U6W1lQTUY1q0wMRGQ6EBKvQzHpXh82XAiftyEqV0395SXAeZzY0aUrTqrT00wH85eCL4'
 );
+
+$session = $stripe->checkout->sessions->retrieve(
+  $_GET['session_id'],
+  []
+);
+
+
+
 $intent = $stripe->setupIntents->retrieve(
-  $_GET['intent'],
+  $session->setup_intent,
   []
 );
 
