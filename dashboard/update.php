@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	session_start();
 	$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 	$id = trim(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING));
-	$price = trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING));
-
+	$price = number_format((float) trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING)), 2, '.', '');
+	
 
 	if (!$token || $token != $_SESSION['token']) {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
@@ -35,7 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if (count($data) == 1){
 			if ($data[0]['price'] === $price){
-				exit;
+				if (!isset($_SESSION['message'])){
+					$_SESSION['message'] = 'The price for company ' . $data[0]['company'] . ' has been updated';
+				}
+
+				header('location:index.php');
 			}
 			// add curl request
 
@@ -75,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 			var_dump($response);
 
-			if ($response == 'success'){
+			if ($response == 'success' || $response == 'failure setting price'){
 				$database->update("tokens_list",
 					array("price" => $price),
 					array('id' => $id)
@@ -89,8 +93,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					$_SESSION['message'] = 'The price for company ' . $data[0]['company'] . ' has been updated';
 				}
 
-				header('location:index.php');
+				
 			}
+
+			else{
+				if ($response == 'failure'){
+					$_SESSION['message'] = 'Couldnt update price, Pick Pack Product doesnt exist on the site';
+				}
+				else{
+					$_SESSION['message'] = 'Couldnt update the price, please check the url registered of the company';
+				}
+			}
+
+			header('location:index.php');
 			
 		}
 

@@ -3,6 +3,9 @@ require_once('../Medoo-master/src/Medoo.php');
 
 use Medoo\Medoo;
 
+ini_set("log_errors", 1);
+ini_set("error_log", "php-error.log");
+
 $database = new Medoo([
 	// [required]
 	'type' => 'mysql',

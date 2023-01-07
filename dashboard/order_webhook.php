@@ -41,7 +41,7 @@ $database->create("wordpress_orders", [
 		"PRIMARY KEY"
 	],
 	"price" => [
-		"INT",
+		"VARCHAR(32)",
 		"NOT NULL"
 	],
 	"bags_sold" => [
